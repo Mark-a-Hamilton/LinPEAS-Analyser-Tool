@@ -1,147 +1,232 @@
 # **Privilege Escalation Principles**  
-### *Independent Reference — Conceptual Model for Understanding Escalation Paths*  
-*(Anchored to standard LPA categories; independent of any specific LPA output)*
+### *Independent Reference — Conceptual Model for Understanding Escalation Paths*
 
 ---
 
 ## **Purpose**  
-This document provides a **clear, plain‑language explanation** of every Privilege Escalation Principle used by LPA. It explains *why* each category matters, what assumptions each principle relies on, and how attackers exploit weaknesses in that category.  
+This document condenses Privilege Escalation understanding into a clear, structured model that removes noise and focuses on the **core principles** behind all escalation paths.  
+It is designed to be both:
 
-It is designed as a **learning tool** and an **analysis aid**:  
-- Learners use it to understand privilege escalation pathways.  
-- Analysts use it to interpret LPA findings with clarity and confidence.  
+- a **teaching resource** for learning PrivEsc fundamentals  
+- an **analysis template** for interpreting LPA output  
 
-This document is **independent of any specific LPA output**. CVEs and remediation steps tell you *what to fix*; these principles explain *why the issue is dangerous*.
+By internalising the **Base Principles**, the **Extended Principles** become intuitive and predictable.
 
 ---
 
 ## **Overview**  
-Privilege escalation occurs when a lower‑privilege user gains access to higher‑privilege capabilities through weaknesses in system configuration, file integrity, environment control, or kernel security.  
+Privilege escalation is not a random collection of tricks — it is a small set of repeatable patterns that all derive from a handful of foundational concepts.
 
-Each principle below represents a **distinct escalation pathway**, and each pathway corresponds directly to an LPA category (SUID, sudo, cron, PATH, environment variables, capabilities, kernel exploits, systemd, NFS, containers, secrets, SGID, daemons, shared libraries, etc.).  
+This document presents:
 
-These principles map cleanly to the extended descriptions in the chart and form a complete conceptual model of how privilege escalation works on Linux systems.
+1. **Base Principles** — the conceptual foundation  
+2. **Extended Principles** — reordered by danger level  
+3. **A visual diagram** showing how base → extended principles relate  
+
+Once the Base Principles are understood, the Extended Principles become easy to reason about, easy to teach, and easy to identify in real systems.
 
 ---
 
-## **Diagram — How Principles Flow Through LPA**  
-```mermaid
+# **Base Principles (Foundation)**  
+These are the *keystone concepts*.  
+Every extended principle is just a specific manifestation of these.
+
+### **Privilege Boundaries**  
+Escalation happens when user, group, or root boundaries collapse.
+
+### **Execution Context**  
+Processes inherit privileges from owners, groups, environment, and capabilities.
+
+### **Ownership & Group Membership**  
+Privileged files or directories writable by lower‑privilege users create escalation paths.
+
+### **Trust Relationships**  
+Scripts, binaries, libraries, and services trust the resources they reference.
+
+### **Resource Access**  
+Privileged processes reading or executing attacker‑controlled content is dangerous.
+
+### **Chaining Logic**  
+Many escalations are indirect: group → writable privileged resource → root.
+
+Internalise these, and PrivEsc becomes predictable.
+
+---
+
+# **Mermaid Diagram — How Base Principles Relate to Extended Principles**
+
+This diagram shows the conceptual flow:
+
+- Base Principles form the foundation  
+- Extended Principles branch from them  
+- SUID/SGID sit at the top due to direct boundary collapse  
+- Everything else is a variation of the same underlying concepts  
+
+```
 flowchart TD
 
-A[Privilege Escalation Principles] --> B[Profiles<br/>Section + Subsection Mapping]
-B --> C[Modules<br/>Python Analysis Logic]
-C --> D[Findings<br/>Structured Output]
-D --> E[Knowledge Base<br/>Enrichment + CVE Links]
-E --> F[Final Report<br/>Summary + Narrative + Self-Audit]
+    subgraph BASE["Base Principles (Foundation)"]
+        PB["Privilege Boundaries"]
+        EC["Execution Context"]
+        OG["Ownership & Group Membership"]
+        TR["Trust Relationships"]
+        RA["Resource Access"]
+        CL["Chaining Logic"]
+    end
 
-style A fill:#1e88e5,stroke:#0d47a1,color:white
-style B fill:#43a047,stroke:#1b5e20,color:white
-style C fill:#fb8c00,stroke:#e65100,color:white
-style D fill:#8e24aa,stroke:#4a148c,color:white
-style E fill:#00897b,stroke:#004d40,color:white
-style F fill:#6d4c41,stroke:#3e2723,color:white
+    subgraph HIGH["High-Impact Principles"]
+        SUID["SUID (Direct Root Escalation)"]
+        SGID["SGID (Group Escalation → Chain → Root)"]
+    end
+
+    subgraph MEDIUM["Medium-Impact Principles"]
+        SUDO["sudo Misconfigurations"]
+        CAP["Linux Capabilities"]
+        PATH["PATH Hijacking"]
+        ENV["Environment Variable Abuse"]
+        PERM["Weak File Permissions"]
+        CRON["cron Hijacking"]
+        SYSTEMD["systemd Service Hijacking"]
+    end
+
+    subgraph LOWER["Lower-Impact / Contextual Principles"]
+        LIB["Shared Libraries / Plugins"]
+        DAEMON["Local Services / Daemons"]
+        NFS["NFS / Remote Mounts"]
+        CONT["Container Escapes"]
+        CREDS["Passwords / Keys / Tokens"]
+        KERNEL["Kernel Exploits"]
+    end
+
+    PB --> SUID
+    PB --> SGID
+    PB --> SUDO
+    PB --> CAP
+
+    EC --> SUID
+    EC --> SGID
+    EC --> PATH
+    EC --> ENV
+
+    OG --> SUID
+    OG --> SGID
+    OG --> PERM
+    OG --> NFS
+
+    TR --> LIB
+    TR --> DAEMON
+    TR --> SYSTEMD
+
+    RA --> CRON
+    RA --> SYSTEMD
+    RA --> CONT
+    RA --> CREDS
+
+    CL --> SGID
+    CL --> CAP
+    CL --> CONT
+    CL --> KERNEL
 ```
 
----
-
-# **Extended Principle Descriptions**  
-
-### **SUID Principle**  
-A SUID binary must never allow lower‑privilege users to influence its behaviour.  
-Because SUID executes with the file owner’s privileges (often root), any user‑controlled input, path, environment, or writable dependency becomes a direct escalation path.
+This diagram is the **visual keystone** of the entire document.
 
 ---
 
-### **sudo Principle**  
-Privilege delegation must be tightly scoped and never allow indirect command execution.  
-Misconfigured sudo rules (wildcards, NOPASSWD, unrestricted interpreters) allow users to escalate by running commands that spawn shells or modify privileged files.
+# **Extended Principles (Reordered by Danger Level)**  
+### *From most dangerous → least dangerous*
 
 ---
 
-### **cron / at Principle**  
-Scheduled tasks running with elevated privileges must only execute trusted, non‑writable content.  
-If a root cron job calls a script or binary that a normal user can modify, the user can inject code that runs as root.
+## **1. SUID Principle (Highest Impact)**  
+Direct privilege boundary collapse.  
+SUID binaries run with the file owner’s privileges — usually root.
+
+Any user‑controlled input or dependency becomes a direct root escalation.
 
 ---
 
-### **PATH Manipulation Principle**  
-Privileged processes must not rely on user‑controlled search paths for command resolution.  
-If a root‑run script calls `cp`, `tar`, `ls`, etc. without absolute paths, a user‑controlled `$PATH` can redirect execution to a malicious binary.
+## **2. SGID Principle (High Impact)**  
+Group boundary collapse.  
+SGID escalates to the group, not root — but chaining often leads to full root.
 
 ---
 
-### **Environment Variables Principle**  
-Privileged programs must not trust user‑controlled environment variables for loading code or configuration.  
-Variables like `LD_PRELOAD`, `LD_LIBRARY_PATH`, or custom config/env variables can force privileged processes to load attacker‑controlled libraries or settings.
+## **3. sudo Principle**  
+Misconfigured sudo rules allow indirect root execution.
 
 ---
 
-### **File Permissions & Ownership Principle**  
-Privileged processes must not depend on files that lower‑privilege users can write to or replace.  
-World‑writable or group‑writable scripts, configs, logs, or sockets used by root allow content hijacking and escalation.
+## **4. Linux Capabilities Principle**  
+Capabilities grant partial root privileges that can be chained.
 
 ---
 
-### **Linux Capabilities Principle**  
-Capabilities must be treated as partial root privileges and assigned only when strictly necessary.  
-Capabilities like `CAP_SYS_ADMIN`, `CAP_SETUID`, or `CAP_NET_ADMIN` can be chained or abused to achieve full root access.
+## **5. PATH Manipulation Principle**  
+Privileged processes must not rely on user‑controlled search paths.
 
 ---
 
-### **Kernel / Local Exploits Principle**  
-The kernel must remain patched and within supported versions to prevent direct user‑to‑root escalation.  
-Kernel vulnerabilities bypass all user‑space controls and grant root regardless of configuration.
+## **6. Environment Variables Principle**  
+Privileged programs must not trust user‑controlled environment variables.
 
 ---
 
-### **systemd Services Principle**  
-Service units running as root must not reference or execute resources writable by non‑privileged users.  
-Writable `ExecStart` scripts, environment files, or included paths allow attackers to hijack service execution.
+## **7. File Permissions & Ownership Principle**  
+Writable privileged resources allow content hijacking.
 
 ---
 
-### **NFS / Remote Mounts Principle**  
-Remote filesystems must not grant root‑equivalent write access to untrusted clients.  
-Misconfigurations like `no_root_squash` allow remote users to create files that local root trusts, enabling escalation.
+## **8. cron / at Principle**  
+Root cron jobs referencing writable scripts allow direct escalation.
 
 ---
 
-### **Containers Principle**  
-Container boundaries must not expose host‑level privileged interfaces to untrusted workloads.  
-Privileged containers, host mounts, or exposed Docker sockets allow attackers to escape to host root.
+## **9. systemd Services Principle**  
+Writable service resources allow hijacking of root‑run services.
 
 ---
 
-### **Passwords, Keys & Tokens Principle**  
-Secrets that unlock privileged accounts must never be stored in locations accessible to lower‑privilege users.  
-Readable credentials allow attackers to impersonate privileged identities directly.
+## **10. Shared Libraries & Plugins Principle**  
+Privileged binaries loading attacker‑controlled libraries = escalation.
 
 ---
 
-### **Setgid (SGID) Principle**  
-Group‑based delegated execution must follow the same integrity rules as SUID.  
-Writable SGID directories or SGID binaries with user‑controlled behaviour allow group‑level privilege escalation.
+## **11. Local Services & Daemons Principle**  
+Root‑run services with insecure IPC or plugin loading can be exploited.
 
 ---
 
-### **Local Services & Daemons Principle**  
-Privileged daemons must validate input strictly and avoid executing user‑controlled content.  
-Insecure IPC, command injection, or plugin loading in root‑run services can be exploited for escalation.
+## **12. NFS / Remote Mounts Principle**  
+Misconfigured NFS (e.g., `no_root_squash`) allows remote root impersonation.
 
 ---
 
-### **Shared Libraries & Plugins Principle**  
-Privileged programs must only load libraries and plugins from trusted, non‑writable locations.  
-If an attacker can place or replace a library in a search path used by a privileged binary, they can hijack execution.
+## **13. Containers Principle**  
+Privileged containers or exposed Docker sockets allow host‑level root.
 
 ---
 
-## **How This Chart Is Meant to Be Used**  
-- **Independent reference:** It stands alone and does not depend on any specific LPA output.  
-- **Anchor for non‑technical readers:** Each label is a familiar LPA category; each principle is a plain‑language explanation.  
-- **CVE alignment:**  
-  - CVEs provide specific remediation steps.  
-  - This chart provides the conceptual reason the issue matters.  
-- **Together:** They form a complete narrative for analysis and reporting.
+## **14. Passwords, Keys & Tokens Principle**  
+Readable secrets allow direct impersonation of privileged accounts.
+
+---
+
+## **15. Kernel / Local Exploits Principle**  
+Kernel vulnerabilities bypass all user‑space controls.
+
+---
+
+# **Why This Document Works**  
+### **It removes noise**  
+No CVEs, no exploit lists — just the principles.
+
+### **It teaches the fundamentals**  
+Base Principles → Extended Principles → Real‑world understanding.
+
+### **It mirrors how LPA works**  
+Your modules map directly to these principles.
+
+### **It becomes an analysis template**  
+You can follow the ordered list top → bottom when reviewing LPA output.
 
 ---
