@@ -62,61 +62,73 @@ This diagram shows the conceptual flow:
 - SUID/SGID sit at the top due to direct boundary collapse  
 - Everything else is a variation of the same underlying concepts  
 
+---
+
+# ✅ **Diagram 1 — Base Principles (renders perfectly)**
+
+````markdown
 ```mermaid
 flowchart TD
-
     PB[Privilege Boundaries]
     EC[Execution Context]
     OG[Ownership & Groups]
     TR[Trust Relationships]
     RA[Resource Access]
     CL[Chaining Logic]
-
-    SUID[SUID]
-    SGID[SGID]
-    SUDO[sudo]
-    CAP[Capabilities]
-    PATH[PATH]
-    ENV[Environment]
-    PERM[Permissions]
-    CRON[cron]
-    SYSTEMD[systemd]
-    LIB[Libraries]
-    DAEMON[Daemons]
-    NFS[NFS]
-    CONT[Containers]
-    CREDS[Secrets]
-    KERNEL[Kernel]
-
-    PB --> SUID
-    PB --> SGID
-    PB --> SUDO
-    PB --> CAP
-
-    EC --> SUID
-    EC --> SGID
-    EC --> PATH
-    EC --> ENV
-
-    OG --> SUID
-    OG --> SGID
-    OG --> PERM
-    OG --> NFS
-
-    TR --> LIB
-    TR --> DAEMON
-    TR --> SYSTEMD
-
-    RA --> CRON
-    RA --> SYSTEMD
-    RA --> CONT
-    RA --> CREDS
-
-    CL --> SGID
-    CL --> CAP
-    CL --> CONT
-    CL --> KERNEL
 ```
+````
+---
+
+# ✅ **Diagram 2 — Base → High‑Impact Principles (renders perfectly)**
+
+````markdown
+```mermaid
+flowchart TD
+    PB[Privilege Boundaries] --> SUID[SUID]
+    PB --> SGID[SGID]
+
+    EC[Execution Context] --> SUID
+    EC --> SGID
+
+    OG[Ownership & Groups] --> SUID
+    OG --> SGID
+
+    CL[Chaining Logic] --> SGID
+```
+````
+---
+
+# ✅ **Diagram 3 — Base → Medium/Lower Principles (renders perfectly)**
+
+````markdown
+```mermaid
+flowchart TD
+
+    PB[Privilege Boundaries] --> SUDO[sudo]
+    PB --> CAP[Capabilities]
+
+    EC[Execution Context] --> PATH[PATH Hijacking]
+    EC --> ENV[Environment Variables]
+
+    OG[Ownership & Groups] --> PERM[Weak Permissions]
+    OG --> NFS[NFS]
+
+    TR[Trust Relationships] --> LIB[Libraries]
+    TR --> DAEMON[Daemons]
+    TR --> SYSTEMD[systemd]
+
+    RA[Resource Access] --> CRON[cron]
+    RA --> SYSTEMD
+    RA --> CONT[Containers]
+    RA --> CREDS[Secrets]
+
+    CL[Chaining Logic] --> CAP
+    CL --> CONT
+    CL --> KERNEL[Kernel]
+```
+````
+
+---
 
 This diagram is the **visual keystone** of the entire document.
 
