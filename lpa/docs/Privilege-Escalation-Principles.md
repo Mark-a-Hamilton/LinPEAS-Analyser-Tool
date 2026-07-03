@@ -78,7 +78,7 @@ flowchart TD
 
 ---
 
-# ✅ **Diagram 2 — Base → High‑Impact Principles (renders perfectly)**
+# ✅ **Base → High‑Impact Principles Diagram**
 
 ```mermaid
 flowchart TD
@@ -96,7 +96,7 @@ flowchart TD
 
 ---
 
-# ✅ **Diagram 3 — Base → Medium/Lower Principles (renders perfectly)**
+# ✅ **ase → Medium/Lower Principles Diagram**
 
 ```mermaid
 flowchart TD
