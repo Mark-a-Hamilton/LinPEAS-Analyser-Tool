@@ -96,7 +96,7 @@ flowchart TD
 
 ---
 
-# ✅ **ase → Medium/Lower Principles Diagram**
+# ✅ **Base → Medium/Lower Principles Diagram**
 
 ```mermaid
 flowchart TD
