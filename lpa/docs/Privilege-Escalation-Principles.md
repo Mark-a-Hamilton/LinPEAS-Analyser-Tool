@@ -130,7 +130,7 @@ This diagram is the **visual keystone** of the entire document.
 
 ---
 
-# **Extended Principles (Reordered by Danger Level)**  
+# **Extended Principles (Ordered by Danger Level)**  
 ### *From most dangerous → least dangerous*
 
 ---
