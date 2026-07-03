@@ -45,7 +45,7 @@ This naming convention is intentionally simple, predictable, and scalable.
 
 ---
 
-## Real Module Examples (from your repository)  
+## Real Module Examples (from LPA repository)  
 Below is a curated list of your actual modules, grouped by conceptual purpose.
 
 ### 🔧 **Privilege Escalation Vector Modules**  
