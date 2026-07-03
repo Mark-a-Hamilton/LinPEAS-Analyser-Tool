@@ -66,7 +66,6 @@ This diagram shows the conceptual flow:
 
 # ✅ **Diagram 1 — Base Principles (renders perfectly)**
 
-````markdown
 ```mermaid
 flowchart TD
     PB[Privilege Boundaries]
@@ -76,7 +75,7 @@ flowchart TD
     RA[Resource Access]
     CL[Chaining Logic]
 ```
-````
+
 ---
 
 # ✅ **Diagram 2 — Base → High‑Impact Principles (renders perfectly)**
