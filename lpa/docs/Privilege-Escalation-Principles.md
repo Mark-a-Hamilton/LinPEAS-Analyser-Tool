@@ -80,7 +80,6 @@ flowchart TD
 
 # ✅ **Diagram 2 — Base → High‑Impact Principles (renders perfectly)**
 
-````markdown
 ```mermaid
 flowchart TD
     PB[Privilege Boundaries] --> SUID[SUID]
@@ -94,12 +93,11 @@ flowchart TD
 
     CL[Chaining Logic] --> SGID
 ```
-````
+
 ---
 
 # ✅ **Diagram 3 — Base → Medium/Lower Principles (renders perfectly)**
 
-````markdown
 ```mermaid
 flowchart TD
 
@@ -125,7 +123,6 @@ flowchart TD
     CL --> CONT
     CL --> KERNEL[Kernel]
 ```
-````
 
 ---
 
