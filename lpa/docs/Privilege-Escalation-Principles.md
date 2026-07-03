@@ -53,7 +53,7 @@ Internalise these, and PrivEsc becomes predictable.
 
 ---
 
-# **Mermaid Diagram — How Base Principles Relate to Extended Principles**
+# **Flowchart Diagram — How Base Principles Relate to Extended Principles**
 
 This diagram shows the conceptual flow:
 
