@@ -62,7 +62,6 @@ This diagram shows the conceptual flow:
 - SUID/SGID sit at the top due to direct boundary collapse  
 - Everything else is a variation of the same underlying concepts  
 
-```
 ```mermaid
 flowchart TD
 
@@ -127,8 +126,8 @@ flowchart TD
     CL --> CAP
     CL --> CONT
     CL --> KERNEL
-``'
 ```
+
 This diagram is the **visual keystone** of the entire document.
 
 ---
