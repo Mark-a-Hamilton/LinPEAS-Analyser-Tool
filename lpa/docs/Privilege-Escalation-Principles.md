@@ -65,39 +65,36 @@ This diagram shows the conceptual flow:
 ```mermaid
 flowchart TD
 
-    subgraph BASE["Base Principles (Foundation)"]
-        PB["Privilege Boundaries"]
-        EC["Execution Context"]
-        OG["Ownership & Group Membership"]
-        TR["Trust Relationships"]
-        RA["Resource Access"]
-        CL["Chaining Logic"]
-    end
+    %% Base Principles
+    PB[Privilege Boundaries]
+    EC[Execution Context]
+    OG[Ownership & Groups]
+    TR[Trust Relationships]
+    RA[Resource Access]
+    CL[Chaining Logic]
 
-    subgraph HIGH["High-Impact Principles"]
-        SUID["SUID (Direct Root Escalation)"]
-        SGID["SGID (Group Escalation → Chain → Root)"]
-    end
+    %% High Impact
+    SUID[SUID]
+    SGID[SGID]
 
-    subgraph MEDIUM["Medium-Impact Principles"]
-        SUDO["sudo Misconfigurations"]
-        CAP["Linux Capabilities"]
-        PATH["PATH Hijacking"]
-        ENV["Environment Variable Abuse"]
-        PERM["Weak File Permissions"]
-        CRON["cron Hijacking"]
-        SYSTEMD["systemd Service Hijacking"]
-    end
+    %% Medium Impact
+    SUDO[sudo]
+    CAP[Capabilities]
+    PATH[PATH Hijacking]
+    ENV[Environment Variables]
+    PERM[Weak Permissions]
+    CRON[cron Hijacking]
+    SYSTEMD[systemd Hijacking]
 
-    subgraph LOWER["Lower-Impact / Contextual Principles"]
-        LIB["Shared Libraries / Plugins"]
-        DAEMON["Local Services / Daemons"]
-        NFS["NFS / Remote Mounts"]
-        CONT["Container Escapes"]
-        CREDS["Passwords / Keys / Tokens"]
-        KERNEL["Kernel Exploits"]
-    end
+    %% Lower Impact
+    LIB[Shared Libraries]
+    DAEMON[Daemons]
+    NFS[NFS]
+    CONT[Containers]
+    CREDS[Secrets]
+    KERNEL[Kernel Exploits]
 
+    %% Relationships
     PB --> SUID
     PB --> SGID
     PB --> SUDO
@@ -127,6 +124,7 @@ flowchart TD
     CL --> CONT
     CL --> KERNEL
 ```
+
 
 This diagram is the **visual keystone** of the entire document.
 
