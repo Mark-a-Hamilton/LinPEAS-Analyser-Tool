@@ -64,7 +64,7 @@ This diagram shows the conceptual flow:
 
 ---
 
-# ✅ **Diagram 1 — Base Principles (renders perfectly)**
+# ✅ **Base Principles Diagram**
 
 ```mermaid
 flowchart TD
