@@ -118,7 +118,6 @@ flowchart TD
     CL --> KERNEL
 ```
 
-
 This diagram is the **visual keystone** of the entire document.
 
 ---
