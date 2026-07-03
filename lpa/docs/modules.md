@@ -186,7 +186,7 @@ The LPA module system is:
 - **Aligned with PrivEsc principles**  
 - **Built through human–AI collaboration**  
 
-Your repo now contains a professional‑grade module architecture ready for teaching, analysis, and future expansion.
+The repository now contains a professional‑grade module architecture ready for teaching, analysis, and future expansion.
 
 ---
 
