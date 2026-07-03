@@ -65,7 +65,6 @@ This diagram shows the conceptual flow:
 ```mermaid
 flowchart TD
 
-    %% Base Principles
     PB[Privilege Boundaries]
     EC[Execution Context]
     OG[Ownership & Groups]
@@ -73,28 +72,22 @@ flowchart TD
     RA[Resource Access]
     CL[Chaining Logic]
 
-    %% High Impact
     SUID[SUID]
     SGID[SGID]
-
-    %% Medium Impact
     SUDO[sudo]
     CAP[Capabilities]
-    PATH[PATH Hijacking]
-    ENV[Environment Variables]
-    PERM[Weak Permissions]
-    CRON[cron Hijacking]
-    SYSTEMD[systemd Hijacking]
-
-    %% Lower Impact
-    LIB[Shared Libraries]
+    PATH[PATH]
+    ENV[Environment]
+    PERM[Permissions]
+    CRON[cron]
+    SYSTEMD[systemd]
+    LIB[Libraries]
     DAEMON[Daemons]
     NFS[NFS]
     CONT[Containers]
     CREDS[Secrets]
-    KERNEL[Kernel Exploits]
+    KERNEL[Kernel]
 
-    %% Relationships
     PB --> SUID
     PB --> SGID
     PB --> SUDO
