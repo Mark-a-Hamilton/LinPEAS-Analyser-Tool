@@ -39,7 +39,7 @@ This makes LinPEAS output easier to understand, easier to navigate, and easier t
 - Naming conventions  
 - Alphabetical ordering rules  
 
-### **📘 Privilege‑Escalation‑Principles.md**
+### **📘 [Privilege‑Escalation‑Principles.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/Privilege-Escalation-Principles.md)**
 - The methodology used to interpret findings  
 - How to evaluate risk  
 - How to identify exploit paths  
