@@ -5,10 +5,8 @@ The **LinPEAS‑Analyser‑Tool (LPA)** is a structured analysis engine that pro
 LPA does **not** replace LinPEAS — it **extends** it.  
 LinPEAS is one of the most widely used Linux privilege‑escalation enumeration tools, and without LinPEAS this analyser would not exist.
 
-👉 **LinPEAS Repository:**  
-`https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS`
+👉 [LinPEAS Repository](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS) 
 
-[LinPEAS Repository](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS)
 ---
 
 ## **What LPA Does**
