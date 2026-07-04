@@ -8,7 +8,7 @@ LinPEAS is one of the most widely used Linux privilege‑escalation enumeration 
 👉 **LinPEAS Repository:**  
 `https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS` [(github.com in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fgithub.com%2Fpeass-ng%2FPEASS-ng%2Ftree%2Fmaster%2FlinPEAS")
 
-[(LinPEAS Repository)](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS")
+[LinPEAS Repository]("https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS")
 ---
 
 ## **What LPA Does**
