@@ -33,7 +33,7 @@ This makes LinPEAS output easier to understand, easier to navigate, and easier t
 - Module/profile interaction  
 - Report interpretation  
 
-### **📘 profiles.md — Profiles & Structure**
+### **📘 [profiles.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/profilles.md) — Profiles & Structure**
 - How `lpa-default.json` defines sections, markers, and subsections  
 - How `lpa-kb.json` defines vulnerabilities  
 - Naming conventions  
