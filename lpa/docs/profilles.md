@@ -1,8 +1,11 @@
-# **LinPEAS Analyser Tool Profiles Specification**
+
+# **LinPEAS Analyser Tool Profiles Specification**  
+*(Updated to reflect actual `lpa-default.json` and `lpa-kb.json` formats)*
 
 ## **Overview**
-Profiles define how the LinPEAS‑Analyser‑Tool interprets raw LinPEAS output and transforms it into a structured, multi‑section privilege‑escalation report.  
-They act as the **mapping layer** between:
+Profiles define how the LinPEAS‑Analyser‑Tool interprets raw LinPEAS output and transforms it into a structured, multi‑section privilege‑escalation report.
+
+Profiles act as the mapping layer between:
 
 - raw LinPEAS text  
 - report sections  
@@ -10,193 +13,222 @@ They act as the **mapping layer** between:
 - analysis modules  
 - vulnerability knowledge base (KB) entries  
 
-Two distinct JSON files make up the profile system:
+Two JSON files define the profile system:
 
-- **`lpa-default.json`** — defines the *report structure*  
-- **`lpa-kb.json`** — defines *vulnerabilities, extended descriptions, and remediation steps*
+- **`lpa-default.json`** — defines the report structure  
+- **`lpa-kb.json`** — defines vulnerabilities, extended descriptions, and remediation steps  
 
 These files work together to ensure consistent, predictable, and extensible analysis.
 
 ---
 
-## **1. `lpa-default.json` — Report Structure Definition**
+# **1. `lpa-default.json` — Report Structure Definition**
 
-### **Purpose**
-`lpa-default.json` defines the **sections**, **subsections**, and **markers** used to extract relevant content from LinPEAS output.  
-It also specifies which **analysis module** should process each subsection.
+## **Purpose**
+`lpa-default.json` defines:
+
+- top‑level report **sections**  
+- subsection **markers**  
+- the **analysis module** used for each section  
+- whether a section is **enabled**  
+- how LinPEAS output is mapped into structured report components  
 
 This file determines the *shape* of the final report.
 
-### **Structure**
+---
+
+## **Actual Structure**
+Below is the real structure used by LPA:
+
 ```json
 {
-  "sections": [
-    {
-      "name": "Kernel",
-      "marker": "Kernel",
-      "subsections": [
-        {
-          "name": "Kernel Version",
-          "marker": "Kernel version",
-          "analysis_type": "lpa_kernel_version"
-        }
-      ]
-    }
+  "id": "system_overview",
+  "markers": ["OS", "Operating System", "Distro", "Hostname", "Uptime", "Hardware"],
+  "analysis_type": "system_overview",
+  "enabled": true,
+  "subsections": [
+    { "id": "os_info", "markers": ["OS", "Distro"] },
+    { "id": "hostname_info", "markers": ["Hostname"] },
+    { "id": "uptime_info", "markers": ["Uptime"] },
+    { "id": "users_list", "markers": ["Users"] },
+    { "id": "groups_list", "markers": ["Groups"] }
   ]
 }
 ```
 
-### **Key Fields**
-- **`name`**  
-  Human‑readable section title.
+---
 
-- **`marker`**  
-  A unique string used to locate the start of the section in LinPEAS output.
+## **Field Definitions**
 
-- **`subsections`**  
-  Fine‑grained analysis units within the section.
+### **`id`**
+Unique identifier for the section.  
+Used internally for module resolution and report assembly.
 
-- **`analysis_type`**  
-  The name of the module used to process this subsection.  
-  **Must match the Python module filename**, e.g.:
+### **`markers`**
+List of strings used to locate the section in LinPEAS output.
 
-  ```
-  lpa_kernel_version.py
-  lpa_sudo_rules.py
-  lpa_env_vars.py
-  ```
-
-### **Naming Convention**
-All LPA modules must follow:
+### **`analysis_type`**
+Name of the Python module responsible for analysing this section.  
+Must match the module filename:
 
 ```
-lpa_<section>_<subsection>.py
+system_overview.py
 ```
 
-This ensures predictable module resolution and prevents ambiguity.
+### **`enabled`**
+Boolean flag controlling whether the section is processed.
 
-### **Design Principles**
-- Sections should represent **major privilege‑escalation categories**.  
-- Subsections should be **specific and actionable**.  
-- Markers must be **unique**, **stable**, and **present in LinPEAS output**.  
-- Analysis types must **exactly match** module filenames.
+### **`subsections`**
+Array of subsection definitions.
+
+Each subsection contains:
+
+- **`id`** — unique identifier  
+- **`markers`** — strings used to extract subsection‑specific content  
 
 ---
 
-## **2. `lpa-kb.json` — Vulnerability Knowledge Base**
+## **Design Principles**
+- Sections represent **major privilege‑escalation categories**.  
+- Subsections represent **specific analysis units**.  
+- Markers must be **stable**, **unique**, and **present in LinPEAS output**.  
+- `analysis_type` must match the module filename exactly.  
+- Section IDs should be **lowercase**, **snake_case**, and **descriptive**.
 
-### **Purpose**
-`lpa-kb.json` defines all known vulnerabilities detected by LinPEAS‑Analyser‑Tool.  
+---
+
+# **2. `lpa-kb.json` — Vulnerability Knowledge Base**
+
+## **Purpose**
+`lpa-kb.json` defines all vulnerabilities known to the LinPEAS‑Analyser‑Tool.
+
 Each entry provides:
 
-- vulnerability identifier  
-- extended description  
-- affected versions  
+- title  
 - severity  
-- remediation steps  
+- category  
+- explanation (“why”)  
+- impact  
+- remediation  
+- ATT&CK mappings  
+- CWE mappings  
+- external references  
 
 This file is the **intelligence layer** of the tool.
 
-### **Structure**
+---
+
+## **Actual Structure**
+Below is the real format used in your KB:
+
 ```json
-{
-  "CVE-2021-3156": {
-    "description": "Heap-based buffer overflow in sudo leading to privilege escalation.",
-    "affected_versions": "<= 1.8.31",
-    "severity": "High",
-    "remediation": "Update sudo to the latest patched version.",
-    "notes": "Also known as Baron Samedit."
-  }
+"available_shells": {
+  "title": "Available shells",
+  "severity": "info",
+  "category": "system",
+  "why": "Shells listed in /etc/shells, indicating available user environments.",
+  "impact": "",
+  "recommendation": "",
+  "attck": [],
+  "cwe": [],
+  "references": []
 }
 ```
 
-### **Key Fields**
-- **`description`**  
-  Clear, extended explanation of the vulnerability.
+---
 
-- **`affected_versions`**  
-  Version ranges or conditions that trigger detection.
+## **Field Definitions**
 
-- **`severity`**  
-  One of: `Low`, `Medium`, `High`, `Critical`.
+### **`title`**
+Human‑readable vulnerability name.
 
-- **`remediation`**  
-  Practical steps to eliminate or mitigate the vulnerability.
+### **`severity`**
+One of:
 
-- **`notes`**  
-  Optional contextual information.
+- `info`  
+- `low`  
+- `medium`  
+- `high`  
+- `critical`  
 
-### **Alphabetical Ordering Rule**
-All vulnerability categories **must be sorted alphabetically** by key:
+### **`category`**
+High‑level grouping used for sorting and filtering.
+
+### **`why`**
+Explanation of *why* this finding matters.
+
+### **`impact`**
+Description of the potential security impact.
+
+### **`recommendation`**
+Actionable remediation steps.
+
+### **`attck`**
+MITRE ATT&CK technique IDs.
+
+### **`cwe`**
+CWE identifiers.
+
+### **`references`**
+External links for further reading.
+
+---
+
+## **Alphabetical Ordering Rule**
+All vulnerability keys must be sorted alphabetically:
 
 ```
-CVE-2019-14287
-CVE-2020-8835
-CVE-2021-3156
-CVE-2022-0847
+available_shells
+capabilities_misconfig
+cron_writable
+kernel_cve_2021_3156
+sudo_nopasswd
 ```
 
 This ensures:
 
 - predictable diffs  
-- easier manual editing  
+- easy manual editing  
 - consistent merges  
-- faster scanning  
 - reduced cognitive load  
 
-### **Design Principles**
-- Keep descriptions **clear and actionable**.  
-- Ensure remediation steps are **practical and realistic**.  
-- Avoid overly verbose entries — focus on exploitability and fixes.  
-- Maintain strict alphabetical ordering.
+---
+
+# **3. How Profiles Drive the LPA Engine**
+
+## **Processing Flow**
+1. LinPEAS raw output is ingested.  
+2. Section markers locate relevant blocks.  
+3. Subsection markers extract fine‑grained content.  
+4. Analysis modules process each subsection.  
+5. KB entries enrich findings with vulnerability intelligence.  
+6. Final report is assembled using the defined structure.
 
 ---
 
-## **3. How Profiles Drive the LPA Engine**
+# **4. Adding New Sections or KB Entries**
 
-### **Processing Flow**
-1. **LinPEAS raw output is ingested.**  
-2. **Markers** from `lpa-default.json` locate relevant sections.  
-3. **Subsection markers** extract fine‑grained content.  
-4. **Analysis modules** process each subsection.  
-5. **KB entries** enrich findings with vulnerability intelligence.  
-6. **Final report** is assembled using the defined structure.
-
-### **Why This Matters**
-This separation ensures:
-
-- modularity  
-- maintainability  
-- predictable behaviour  
-- easy extension  
-- safe updates  
-- clear privilege‑escalation logic  
-
----
-
-## **4. Adding New Sections or KB Entries**
-
-### **Adding a Section**
+## **Adding a Section**
 1. Add a new section object to `lpa-default.json`.  
 2. Define markers and subsections.  
-3. Create matching module files.  
+3. Create a matching analysis module.  
 4. Test extraction against real LinPEAS output.
 
-### **Adding a KB Entry**
-1. Choose a unique key (CVE or custom identifier).  
-2. Add the entry in alphabetical order.  
-3. Provide extended description and remediation.  
-4. Validate detection logic in the relevant module.
+## **Adding a KB Entry**
+1. Choose a unique key.  
+2. Insert alphabetically.  
+3. Provide title, severity, category, why, impact, remediation.  
+4. Add ATT&CK, CWE, and references if applicable.  
+5. Validate detection logic.
 
 ---
 
-## **5. Best Practices**
+# **5. Best Practices**
 - Keep markers simple and stable.  
 - Avoid overly granular subsections.  
 - Ensure module names match `analysis_type`.  
 - Maintain alphabetical ordering in KB.  
 - Document new sections and vulnerabilities immediately.  
-- Test against multiple LinPEAS outputs.  
+- Test against multiple LinPEAS outputs.
 
 ---
-
