@@ -63,7 +63,7 @@ A methodology guide explaining:
 
 ---
 ####################
-## **📘 [Installation]() **
+## **📘 [Installation](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/installation.md)**
 (New section — embedded from installation.md)
 
 The LinPEAS‑Analyser‑Tool (LPA) is designed to be portable, self‑contained, and easy to install.
