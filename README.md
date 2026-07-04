@@ -62,7 +62,7 @@ A methodology guide explaining:
 - how to apply privilege‑escalation logic consistently  
 
 ---
-####################
+
 ## **📘 [Installation](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/installation.md)**
 (New section — embedded from installation.md)
 
@@ -73,7 +73,8 @@ This section provides:
 - Important notes about module and profile placement
 - Instructions for adding LPA to your system PATH
 
-####################
+---
+
 ## **Why LPA Exists**
 LinPEAS produces a huge amount of valuable information — but it is raw, dense, and unstructured.
 
