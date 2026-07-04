@@ -1,4 +1,4 @@
-#**LinPEAS‑Analyser‑Tool Profiles Specification**
+# **LinPEAS‑Analyser‑Tool Profiles Specification**
 
 ## **Overview**
 Profiles define how the LinPEAS‑Analyser‑Tool interprets raw LinPEAS output and transforms it into a structured, multi‑section privilege‑escalation report.  
