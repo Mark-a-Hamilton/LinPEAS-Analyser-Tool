@@ -25,7 +25,7 @@ This makes LinPEAS output easier to understand, easier to navigate, and easier t
 
 ## **Documentation Overview**
 
-### **📘 lpa.md — How LPA Works**
+### **📘 [lpa.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/lpa.md) — How LPA Works**
 - Running LPA  
 - Input/output  
 - Internal workflow  
