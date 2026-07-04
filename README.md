@@ -1,2 +1,70 @@
-# LinPEAS-Analyser-Tool
-this is a tool designed to simply make sense of the LinPEAS raw enumerated output
+# **LinPEAS‑Analyser‑Tool (LPA)**
+
+The **LinPEAS‑Analyser‑Tool (LPA)** is a structured analysis engine that processes raw LinPEAS output and converts it into a clear, modular, vulnerability‑focused privilege‑escalation report.
+
+LPA does **not** replace LinPEAS — it **extends** it.  
+LinPEAS is one of the most widely used Linux privilege‑escalation enumeration tools, and without LinPEAS this analyser would not exist.
+
+👉 **LinPEAS Repository:**  
+`https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS` [(github.com in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fgithub.com%2Fpeass-ng%2FPEASS-ng%2Ftree%2Fmaster%2FlinPEAS")
+
+[(LinPEAS Repository)](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS")
+---
+
+## **What LPA Does**
+LPA takes the raw, unstructured LinPEAS output and:
+
+- extracts relevant sections using profile markers  
+- processes each subsection through modular analysis engines  
+- matches findings against a structured vulnerability knowledge base  
+- produces a clean Markdown report  
+- aligns findings with Privilege‑Escalation‑Principles  
+- provides remediation guidance where applicable  
+
+This makes LinPEAS output easier to understand, easier to navigate, and easier to act upon.
+
+---
+
+## **Documentation Overview**
+
+### **📘 lpa.md — How LPA Works**
+- Running LPA  
+- Input/output  
+- Internal workflow  
+- Flowchart  
+- Module/profile interaction  
+- Report interpretation  
+
+### **📘 profiles.md — Profiles & Structure**
+- How `lpa-default.json` defines sections, markers, and subsections  
+- How `lpa-kb.json` defines vulnerabilities  
+- Naming conventions  
+- Alphabetical ordering rules  
+
+### **📘 Privilege‑Escalation‑Principles.md**
+- The methodology used to interpret findings  
+- How to evaluate risk  
+- How to identify exploit paths  
+- How to prioritise remediation  
+
+---
+
+## **Why LPA Exists**
+LinPEAS produces a huge amount of valuable information — but it is raw, dense, and unstructured.
+
+LPA exists to:
+
+- reduce analysis time  
+- highlight actionable findings  
+- provide structured vulnerability intelligence  
+- make privilege‑escalation enumeration easier to understand  
+- support both learning and professional use  
+
+---
+
+## **Acknowledgements**
+Special thanks to the creators of **LinPEAS** and **PEASS‑NG**.  
+Their work is foundational to Linux privilege‑escalation research and tooling.
+
+---
+
