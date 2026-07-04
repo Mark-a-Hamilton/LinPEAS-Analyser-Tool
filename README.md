@@ -62,7 +62,18 @@ A methodology guide explaining:
 - how to apply privilege‑escalation logic consistently  
 
 ---
+####################
+## **📘 [Installation]() **
+(New section — embedded from installation.md)
 
+The LinPEAS‑Analyser‑Tool (LPA) is designed to be portable, self‑contained, and easy to install.
+This section provides:
+- A recommended installation method for users without an existing tool layout
+- Euidance for users with their own preferred directory structure
+- Important notes about module and profile placement
+- Instructions for adding LPA to your system PATH
+
+####################
 ## **Why LPA Exists**
 LinPEAS produces a huge amount of valuable information — but it is raw, dense, and unstructured.
 
