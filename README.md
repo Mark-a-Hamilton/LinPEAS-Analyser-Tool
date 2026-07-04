@@ -23,27 +23,43 @@ This makes LinPEAS output easier to understand, easier to navigate, and easier t
 
 ---
 
-## **Documentation Overview**
+## **📘 Documentation Overview**
 
 ### **📘 [lpa.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/lpa.md) — How LPA Works**
-- Running LPA  
-- Input/output  
-- Internal workflow  
-- Flowchart  
-- Module/profile interaction  
-- Report interpretation  
+A practical guide explaining:
+- how to run LPA  
+- what input/output looks like  
+- how the internal workflow operates  
+- how modules and profiles interact  
+- how to interpret the final report  
+
+---
 
 ### **📘 [profiles.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/profilles.md) — Profiles & Structure**
-- How `lpa-default.json` defines sections, markers, and subsections  
-- How `lpa-kb.json` defines vulnerabilities  
-- Naming conventions  
-- Alphabetical ordering rules  
+A technical breakdown of:
+- how `lpa-default.json` defines sections, markers, and subsections  
+- how `lpa-kb.json` defines vulnerabilities  
+- naming conventions  
+- alphabetical ordering rules  
+
+---
+
+### **📘 [modules.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/modules.md) — Analysis Modules**
+A developer‑focused overview describing:
+- each analysis module  
+- what subsection it processes  
+- what data it extracts  
+- how it interacts with the KB  
+- how modules contribute to the final report  
+
+---
 
 ### **📘 [Privilege‑Escalation‑Principles.md](https://github.com/Mark-a-Hamilton/LinPEAS-Analyser-Tool/blob/main/lpa/docs/Privilege-Escalation-Principles.md)**
-- The methodology used to interpret findings  
-- How to evaluate risk  
-- How to identify exploit paths  
-- How to prioritise remediation  
+A methodology guide explaining:
+- how to evaluate findings  
+- how to identify exploit paths  
+- how to prioritise remediation  
+- how to apply privilege‑escalation logic consistently  
 
 ---
 
