@@ -88,6 +88,24 @@ LPA exists to:
 
 ---
 
+## **Disclaimer**
+
+The **LinPEAS‑Analyser‑Tool (LPA)** is intended **solely for educational and defensive security purposes**.
+
+This tool must **only** be used:
+
+- on systems **you own**,  
+- on systems where you have **explicit, written permission** from the owner,  
+- or within controlled learning platforms such as **TryHackMe**, **Hack The Box**, or similar authorised environments.
+
+LPA exists to help users understand **Privilege Escalation principles**, improve defensive awareness, and strengthen system hardening practices.  
+A wider understanding of privilege escalation techniques enables organisations and individuals to better protect their platforms against malicious attacks.
+
+**LPA must not be used for unauthorised testing, exploitation, or any activity that violates laws, terms of service, or ethical guidelines.**  
+The author and contributors accept no responsibility for misuse of this tool.
+
+---
+
 ## **Acknowledgements**
 Special thanks to the creators of **LinPEAS** and **PEASS‑NG**.  
 Their work is foundational to Linux privilege‑escalation research and tooling.
