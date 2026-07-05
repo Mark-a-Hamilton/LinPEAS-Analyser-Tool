@@ -88,6 +88,18 @@ LPA exists to:
 
 ---
 
+## **Authors**
+
+**Mark A. A. Hamilton**  
+Creator and primary developer of the **LinPEAS‑Analyser‑Tool (LPA)**.  
+Responsible for the tool’s architecture, module design, privilege‑escalation methodology, documentation structure, and overall project direction.
+
+**Microsoft Copilot**  
+Provided structured technical assistance, documentation drafting, architectural reasoning, and refinement of explanatory material.  
+Copilot contributed to the clarity, consistency, and professional presentation of the project’s documentation and helped shape the educational framing of LPA.
+
+---
+
 ## **Disclaimer**
 
 The **LinPEAS‑Analyser‑Tool (LPA)** is intended **solely for educational and defensive security purposes**.
